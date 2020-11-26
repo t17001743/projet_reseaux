@@ -42,13 +42,32 @@ int tun_alloc(char *dev){
     strcpy(dev, ifr.ifr_name);
     return fd;  //retourne un tunfd
 }    
+ 
+/*------------------------------------------------------------------------------*/
+
+int write_dst(int src, int dst) {
+    char buffer[1500];
+    int nread;
+
+    /* Note that "buffer" should be at least the MTU size of the interface, eg 1500   bytes */
+    nread = read(src,buffer,sizeof(buffer));
+
+    if(nread < 0) {
+        perror("Reading from interface");
+        return -1;
+    }
+
+    write(dst, buffer, nread);
+
+    return 0;
+} 
 
 /*------------------------------------------------------------------------------*/
 
 int main (int argc, char** argv){
 
-    if(argc < 2){
-        printf("Usage: ./test_iftun tun0\n");
+    if(argc < 5){
+        printf("Usage: ./test_iftun tun0 | hexdump -C\n");
         return 1;
     }
 
@@ -72,5 +91,11 @@ int main (int argc, char** argv){
     printf("Appuyez sur une touche pour terminer\n");
     getchar();
   
+    //écriture des données lisibles de la source vers le destinataire
+    //tant qu'il y a des données à lire
+    while(1) {
+        write_dst(tunfd, 1);  //test avec dst=1 (sortie standard)
+    }
+
     return 0;
 }
