@@ -14,7 +14,7 @@ int tun_alloc(char *dev);
  * Recopie perpétuellement toutes les données lisibles depuis la source dans le fichier destinataire
  * @param src fichier descripteur source
  * @param dst fichier descripteur destination
- * @return
+ * @return 0 si les données ont été écrites avec succès de src vers dst, -1 sinon
  */
 int write_dst(int src, int dst);
 

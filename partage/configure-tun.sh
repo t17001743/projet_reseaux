@@ -1,3 +1,5 @@
+#THIEL Samantha, COZZOLINO Christine, M1 Informatique - Projet Réseaux
+
 #Commandes de configuration pour l'interface tun0
 
 #L'interface est DOWN par défaut, on la met à UP
