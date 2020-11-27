@@ -46,18 +46,19 @@ int tun_alloc(char *dev){
 /*------------------------------------------------------------------------------*/
 
 int write_dst(int src, int dst) {
-    char buffer[1500];
-    int nread;
+    char buffer[1500];  //buffer pour la lecture
+    int srcData;
 
-    /* Note that "buffer" should be at least the MTU size of the interface, eg 1500   bytes */
-    nread = read(src,buffer,sizeof(buffer));
+    //lit les données de src et les met dans le buffer
+    srcData = read(src,buffer,sizeof(buffer));
 
-    if(nread < 0) {
-        perror("Reading from interface");
+    if(srcData < 0) {
+        perror("Il n'y a aucune donnée à lire.");
         return -1;
     }
 
-    write(dst, buffer, nread);
+    //on écrit les données de src dans dst
+    write(dst, buffer, srcData);
 
     return 0;
 } 
